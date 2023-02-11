@@ -1,0 +1,28 @@
+### User signup creates new user
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+    "email": "test2@test.com",
+    "password": "test"
+}
+
+### Find user with id
+GET http://localhost:3000/auth/d2a292c1-4e93-47ae-b0e0-421bb1bc1e0d	
+Content-Type: application/json
+
+### Find all users
+GET http://localhost:3000/auth/users
+Content-Type: application/json
+
+### Delete user by id
+DELETE http://localhost:3000/auth/df788617-f3e9-4441-802d-346dd9550bf5	
+Content-Type: application/json
+
+### Updates a user
+PATCH http://localhost:3000/auth/d2a292c1-4e93-47ae-b0e0-421bb1bc1e0d	
+Content-Type: application/json
+
+{
+    "password": "aaaaa"
+}
