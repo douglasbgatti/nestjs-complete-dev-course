@@ -15,15 +15,31 @@ describe('AuthController (e2e)', () => {
     await app.init();
   });
 
-  it('handles a signup request', () => {
-    return request(app.getHttpServer())
+  it('handles a signup request', async () => {
+    const response = await request(app.getHttpServer())
       .post('/auth/signup')
       .send({ email: 'test_created@email.com', password: 'mypassword' })
-      .expect(201)
-      .then((res) => {
-        const { id, email } = res.body;
-        expect(id).toBeDefined();
-        expect(email).toEqual('test_created@email.com');
-      });
+      .expect(201);
+
+    const { id, email } = response.body;
+    expect(id).toBeDefined();
+    expect(email).toEqual('test_created@email.com');
+  });
+
+  it('handles a signup request and then gets the currently logged in user', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/auth/signup')
+      .send({ email: 'test_created@email.com', password: 'mypassword' })
+      .expect(201);
+
+    const cookie = response.get('Set-Cookie');
+    expect(cookie).toBeDefined();
+
+    const whoAmIResponse = await request(app.getHttpServer())
+      .get('/auth/whoami')
+      .set('Cookie', cookie)
+      .expect(200);
+
+    expect(whoAmIResponse.body.email).toEqual('test_created@email.com');
   });
 });
