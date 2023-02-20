@@ -11,3 +11,17 @@ Content-Type: application/json
   "lng": 0,
   "lat": 0
 }
+
+### Approve an existing report
+
+PATCH http://localhost:3000/reports/cfb9b9ef-85d0-496e-9da4-85b1be737fe9	
+Content-Type: application/json
+
+{
+  "approved": true
+}
+
+### Approve an existing report
+
+GET http://localhost:3000/reports/?make=Toyota&model=Corolla&lat=0&lng=0&year=2022&mileage=24000	
+Content-Type: application/json
