@@ -1,5 +1,10 @@
 var dbConfig = {
   synchronize: false,
+  migrations: ['migrations/*.js'],
+  migrationsTableName: 'custom_migration_table',
+  cli: {
+    migrationsDir: 'migrations',
+  },
 };
 
 switch (process.env.NODE_ENV) {
@@ -7,14 +12,16 @@ switch (process.env.NODE_ENV) {
     Object.assign(dbConfig, {
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [__dirname + '/**/*.entity.js'],
+      entities: ['dist/**/*.entity.js'],
+      migrationsRun: true,
     });
     break;
   case 'test':
     Object.assign(dbConfig, {
       type: 'sqlite',
       database: 'test.sqlite',
-      entities: [__dirname + '/**/*.entity.ts'],
+      entities: ['src/**/*.entity.ts'],
+      migrationsRun: true,
     });
     break;
   case 'production':
@@ -22,5 +29,7 @@ switch (process.env.NODE_ENV) {
   default:
     throw new Error('unknown environment');
 }
+
+console.log(process.env.NODE_ENV, dbConfig);
 
 module.exports = dbConfig;
